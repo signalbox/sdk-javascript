@@ -6,11 +6,10 @@ The Signal Box JavaScript SDK aims to provide a light wrapper to communicate wit
 ## Contents
 
 * [Setup](#setup)
-* Actions
-* HTTP Verbs
+* [Actions](#actions)
+* [HTTP Verbs](#http-verbs)
 
 
-<a id="setup"/>
 ## Setup
 
 In order to start communicating with your resources API, you'll need to tell Signal Box who you are and what application you're using. To do this, call the `setup` function.
