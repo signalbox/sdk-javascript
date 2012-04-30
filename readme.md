@@ -5,19 +5,22 @@ The Signal Box JavaScript SDK aims to provide a light wrapper to communicate wit
 
 ## Contents
 
-* Setup
+* [Setup](#setup)
 * Actions
 * HTTP Verbs
 
 
+<a id="setup"/>
 ## Setup
 
 In order to start communicating with your resources API, you'll need to tell Signal Box who you are and what application you're using. To do this, call the `setup` function.
 
-  SignalBox.setup({
-    app      : 'myapp',
-    username : 'demo'
-  });
+```javascript
+SignalBox.setup({
+  app      : 'myapp',
+  username : 'demo'
+});
+```
 
 This will ensure your credentials are set correctly for each request.
 
