@@ -31,13 +31,14 @@ This will ensure your credentials are set correctly for each request.
 
 Signal Box describes HTTP verbs using actions. There are 5 actions in total:
 
-* List
-* Read
-* Create
-* Update
-* Destroy
+* [List](#list)
+* [Read](#read)
+* [Create](#create)
+* [Update](#update)
+* [Destroy](#destroy)
 
 Each of these actions are exposed through the library API.
+
 
 ### List
 
@@ -48,74 +49,109 @@ SignalBox.list(resource, options)
 * **resource** - The resource plural name.
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
   * **query** - A valid SBQL query, with replacement tags. See [query encoding](#query-encoding).
-  * **queryReplacements** - A valid replacements object for the `query` parameter.
+  * **queryReplacements** - A valid replacement object for the `query` parameter.
 
-Makes a request to a resources LIST action, returning a collection of records.
+Makes a request to a resources list action, returning a collection of records.
 
 
 ### Read
 
-...
+```javascript
+SignalBox.read(resource, id, options)
+```
+
+* **resource** - The resource plural name.
+* **id** - The ID of the resource instance.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+
+Makes a request to a resources read action, returning an instance of a resource.
 
 
 ### Create
 
-...
+```javascript
+SignalBox.create(resource, id, options)
+```
+
+* **resource** - The resource plural name.
+* **id** - The ID of the resource instance.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
+  * **params** - The property values of the new resource.
+
+Makes a request to a resources create action, creating and returning a new resource instance.
 
 
 ### Update
 
-...
+```javascript
+SignalBox.update(resource, id, options)
+```
+
+* **resource** - The resource plural name.
+* **id** - The ID of the resource instance.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
+  * **params** - The property values to update on the resource.
+
+Makes a request to a resources update action, updating and returning the resource instance.
 
 
 ### Destroy
 
-...
+```javascript
+SignalBox.destroy(resource, id, options)
+```
+
+* **resource** - The resource plural name.
+* **id** - The ID of the resource instance.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+
+Makes a request to a resources destroy action, deleting the resource instance.
 
 
 ## HTTP Verbs
 
-Action functions are simple wrappers around the HTTP verbs API. If you wish, you can use these instead to communicate with your resources.
+Action functions are simple wrappers around the HTTP verbs API. If you wish, you can use these instead to communicate with your resources:
+
+* [GET](#get)
+* [POST](#post)
+* [PUT](#put)
+* [DELETE](#delete)
 
 
 ### GET
 
 ```javascript
-SignalBox.get(resource, params, options)
+SignalBox.get(url, options)
 ```
 
-* **resource** - The individual resource or collection URL.
-* **params** - An object containing parameters for the request.
-* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+* **url** - the target URL.
+* **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-
-Performs a GET request, fetching either a single resource or a collection of resources.
+Performs a GET request to the given URL.
 
 
 ### POST
 
 ```javascript
-SignalBox.post(resource, params, options)
+SignalBox.post(resource, options)
 ```
 
-* **resource** - The resource collection URL.
-* **params** - An object containing the resource property values.
-* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+* **url** - the target URL.
+* **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a POST request, creating a resource instance.
+Performs a POST request to the given URL.
 
 
 ### PUT
 
 ```javascript
-SignalBox.put(resource, params, options)
+SignalBox.put(resource, options)
 ```
 
-* **resource** - The individual resource URL.
-* **params** - An object containing the resource property values to update.
-* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+* **url** - the target URL.
+* **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a PUT request, updating a resource instance.
+Performs a PUT request to the given URL.
 
 
 ### DELETE
@@ -124,10 +160,10 @@ Performs a PUT request, updating a resource instance.
 SignalBox.delete(resource, options)
 ```
 
-* **resource** - The individual resource URL.
-* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+* **url** - the target URL.
+* **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a DELETE request, deleting a resource instance. Note that this is the only function which does not have the same name as the HTTP verb due to `delete` being a reserved word in JavaScript.
+Performs a DELETE request to the given URL. Note that some older browsers may require you to access this method using the `SignalBox['delete']` syntax due to `delete` being a reserved word.
 
 
 ## Query Encoding
