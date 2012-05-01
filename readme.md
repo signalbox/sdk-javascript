@@ -41,7 +41,16 @@ Each of these actions are exposed through the library API.
 
 ### List
 
-...
+```javascript
+SignalBox.list(resource, options)
+```
+
+* **resource** - The resource plural name.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
+  * **query** - A valid SBQL query, with replacement tags. See [query encoding](#query-encoding).
+  * **queryReplacements** - A valid replacements object for the `query` parameter.
+
+Makes a request to a resources LIST action, returning a collection of records.
 
 
 ### Read
@@ -112,7 +121,7 @@ Performs a PUT request, updating a resource instance.
 ### DELETE
 
 ```javascript
-SignalBox.delete(resource, options);
+SignalBox.delete(resource, options)
 ```
 
 * **resource** - The individual resource URL.
@@ -124,7 +133,7 @@ Performs a DELETE request, deleting a resource instance. Note that this is the o
 ## Query Encoding
 
 ```javascript
-SignalBox.encodeSBQL(query, replacements);
+SignalBox.encodeSBQL(query, replacements)
 ```
 
 * **query** - A string representation of the SBQL query.
@@ -135,7 +144,10 @@ Encodes a string as a URL parameter with the given replacements into a valid SBQ
 Example usage:
 
 ```javascript
-SignalBox.encodeSBQL('SELECT * FROM {{resource}}', { resource : 'users' }) // => SELECT%20*%20FROM%20users
+SignalBox.encodeSBQL('SELECT * FROM {{resource}} ORDER BY {{order}}', {
+  resource : 'users',
+  order    : 'username'
+}) // => SELECT%20*%20FROM%20users
 ```
 
 
