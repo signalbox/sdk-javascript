@@ -80,29 +80,63 @@ SignalBox.get(resource, params, options)
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
 
 
-Performs a GET request to the given resource.
-
-...
+Performs a GET request, fetching either a single resource or a collection of resources.
 
 
 ### POST
 
-...
+```javascript
+SignalBox.post(resource, params, options)
+```
+
+* **resource** - The resource collection URL.
+* **params** - An object containing the resource property values.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+
+Performs a POST request, creating a resource instance.
 
 
 ### PUT
 
-...
+```javascript
+SignalBox.put(resource, params, options)
+```
+
+* **resource** - The individual resource URL.
+* **params** - An object containing the resource property values to update.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+
+Performs a PUT request, updating a resource instance.
 
 
 ### DELETE
 
-...
+```javascript
+SignalBox.delete(resource, options);
+```
+
+* **resource** - The individual resource URL.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+
+Performs a DELETE request, deleting a resource instance. Note that this is the only function which does not have the same name as the HTTP verb due to `delete` being a reserved word in JavaScript.
 
 
 ## Query Encoding
 
-...
+```javascript
+SignalBox.encodeSBQL(query, replacements);
+```
+
+* **query** - A string representation of the SBQL query.
+* **replacements** - An object containing query replacement values.
+
+Encodes a string as a URL parameter with the given replacements into a valid SBQL query. This is a convenience method to avoid scenarios where you may have a large query requiring you to concatenate many strings.
+
+Example usage:
+
+```javascript
+SignalBox.encodeSBQL('SELECT * FROM {{resource}}', { resource : 'users' }) // => SELECT%20*%20FROM%20users
+```
 
 
 ## Specs
