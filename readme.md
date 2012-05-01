@@ -5,10 +5,17 @@ The Signal Box JavaScript SDK aims to provide a light wrapper to communicate wit
 
 ## Contents
 
+* [API Documentation](#api-documentation)
 * [Setup](#setup)
 * [Actions](#actions)
 * [HTTP Verbs](#http-verbs)
+* [Queries without an explicit scope](#queries-without-an-explicit-scope)
 * [Query Encoding](#query-encoding)
+
+
+## API Documentation
+
+The API documentation related to each library call can be found on [the Signal Box documentation site](https://docs.getsignalbox.com/reference/resource-api).
 
 
 ## Setup
@@ -76,7 +83,7 @@ SignalBox.create(resource, id, options)
 * **resource** - The resource plural name.
 * **id** - The ID of the resource instance.
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
-  * **params** - The property values of the new resource.
+  * **params** - An object representing the property values of the new resource.
 
 Makes a request to a resources create action, creating and returning a new resource instance.
 
@@ -90,7 +97,7 @@ SignalBox.update(resource, id, options)
 * **resource** - The resource plural name.
 * **id** - The ID of the resource instance.
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
-  * **params** - The property values to update on the resource.
+  * **params** - An object representing the property values to update on the resource.
 
 Makes a request to a resources update action, updating and returning the resource instance.
 
@@ -110,7 +117,7 @@ Makes a request to a resources destroy action, deleting the resource instance.
 
 ## HTTP Verbs
 
-Action functions are simple wrappers around the HTTP verbs API. If you wish, you can use these instead to communicate with your resources:
+Action functions are simply wrappers around the HTTP verbs API. If you wish, you can use these instead to communicate with your resources:
 
 * [GET](#get)
 * [POST](#post)
@@ -166,6 +173,32 @@ SignalBox.delete(resource, options)
 Performs a DELETE request to the given URL. Note that some older browsers may require you to access this method using the `SignalBox['delete']` syntax due to `delete` being a reserved word.
 
 
+## Queries without an explicit scope
+
+SBQL queries can also be executed without an explicit scope (resource plural name). You can do this using the `query` function.
+
+```javascript
+SignalBox.query(query, replacements, options)
+```
+
+* **query** - The SBQL query, with supported replacement tags.
+* **replacements** - A valid replacement object for the `query` parameter.
+* **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
+
+Example usage:
+
+```javascript
+SignalBox.query('SELECT * FROM {{resource}} ORDER BY {{order}}', {
+  resource : 'users',
+  order : 'username'
+}, {
+  success : function(response){
+    console.log(response)
+  }
+})
+```
+
+
 ## Query Encoding
 
 ```javascript
@@ -173,9 +206,9 @@ SignalBox.encodeSBQL(query, replacements)
 ```
 
 * **query** - A string representation of the SBQL query.
-* **replacements** - An object containing query replacement values.
+* **replacements** - An object containing query replacements.
 
-Encodes a string as a URL parameter with the given replacements into a valid SBQL query. This is a convenience method to avoid scenarios where you may have a large query requiring you to concatenate many strings.
+Encodes a string as a URL parameter into a valid SBQL query. This is a convenience method to avoid scenarios where you may have a large query requiring you to concatenate many strings.
 
 Example usage:
 
@@ -183,13 +216,13 @@ Example usage:
 SignalBox.encodeSBQL('SELECT * FROM {{resource}} ORDER BY {{order}}', {
   resource : 'users',
   order    : 'username'
-}) // => SELECT%20*%20FROM%20users
+}) // => SELECT%20*%20FROM%20users%20ORDER%20BY%20username
 ```
 
 
 ## Specs
 
-Specs are written using Jasmine and Sinon. Running the tests should be as simple as opening specs/index.html in your browser.
+Specs are written using Jasmine and Sinon. Running the tests should be as simple as opening `specs/index.html` in your browser.
 
 
 ## Bugs
