@@ -12,6 +12,7 @@ The Signal Box JavaScript SDK aims to provide a light wrapper to communicate wit
 * [Queries without an explicit scope](#queries-without-an-explicit-scope)
 * [Query Encoding](#query-encoding)
 * [Function Chaining](#function-chaining)
+* [Cross Origin Requests](#cross-origin-requests)
 
 
 ## API Documentation
@@ -137,12 +138,10 @@ Action functions are simply wrappers around the HTTP verbs API. If you wish, you
 SignalBox.get(url, options)
 ```
 
-Returns `response` and `xhr`.
-
-* **url** - the target URL.
+* **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a GET request to the given URL.
+Performs a GET request to the given URL. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### POST
@@ -151,7 +150,7 @@ Performs a GET request to the given URL.
 SignalBox.post(resource, options)
 ```
 
-* **url** - the target URL.
+* **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
 Performs a POST request to the given URL.
@@ -163,7 +162,7 @@ Performs a POST request to the given URL.
 SignalBox.put(resource, options)
 ```
 
-* **url** - the target URL.
+* **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
 Performs a PUT request to the given URL.
@@ -175,7 +174,7 @@ Performs a PUT request to the given URL.
 SignalBox.delete(resource, options)
 ```
 
-* **url** - the target URL.
+* **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
 Performs a DELETE request to the given URL. Note that some older browsers may require you to access this method using the `SignalBox['delete']` syntax due to `delete` being a reserved word.
@@ -230,6 +229,19 @@ SignalBox.encodeSBQL('SELECT * FROM {{resource}} ORDER BY {{order}}', {
 ## Function Chaining
 
 Just like jQuery's `$.ajax` function, each Signal Box action and HTTP verb call returns a deferred object, ensuring method chaining works the same as a regular jQuery AJAX call.
+
+
+## Cross Origin Requests
+
+In order to use the SDK from a remote server you'll need to use the Request Headers add-on. This allows you to set additional headers in API responses, including [CORS](https://developer.mozilla.org/en/HTTP_access_control) headers. For example, you may want to set the following headers:
+
+```plain
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: Content-Type, X-Requested-With
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+```
+
+An alternative to allowing cross domain communication is to use a proxy. When proxying requests you can tell the SDK to use your local webserver instead of `api.getsignalbox.com` by changing the `SignalBox.host` value to your web server address.
 
 
 ## Specs
