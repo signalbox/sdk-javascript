@@ -11,6 +11,7 @@ The Signal Box JavaScript SDK aims to provide a light wrapper to communicate wit
 * [HTTP Verbs](#http-verbs)
 * [Queries without an explicit scope](#queries-without-an-explicit-scope)
 * [Query Encoding](#query-encoding)
+* [Function Chaining](#function-chaining)
 
 
 ## API Documentation
@@ -19,6 +20,12 @@ The API documentation related to each library call can be found on [the Signal B
 
 
 ## Setup
+
+Download and include the javascript in your page:
+
+```html
+<script type="text/javascript" src="sdk.js"></script>
+```
 
 In order to start communicating with your resources API, you'll need to tell Signal Box who you are and what application you're using. To do this, call the `setup` function.
 
@@ -77,11 +84,10 @@ Makes a request to a resources read action, returning an instance of a resource.
 ### Create
 
 ```javascript
-SignalBox.create(resource, id, options)
+SignalBox.create(resource, options)
 ```
 
 * **resource** - The resource plural name.
-* **id** - The ID of the resource instance.
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
   * **params** - An object representing the property values of the new resource.
 
@@ -130,6 +136,8 @@ Action functions are simply wrappers around the HTTP verbs API. If you wish, you
 ```javascript
 SignalBox.get(url, options)
 ```
+
+Returns `response` and `xhr`.
 
 * **url** - the target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
@@ -190,7 +198,7 @@ Example usage:
 ```javascript
 SignalBox.query('SELECT * FROM {{resource}} ORDER BY {{order}}', {
   resource : 'users',
-  order : 'username'
+  order    : 'username'
 }, {
   success : function(response){
     console.log(response)
@@ -218,6 +226,10 @@ SignalBox.encodeSBQL('SELECT * FROM {{resource}} ORDER BY {{order}}', {
   order    : 'username'
 }) // => SELECT%20*%20FROM%20users%20ORDER%20BY%20username
 ```
+
+## Function Chaining
+
+Just like jQuery's `$.ajax` function, each Signal Box action and HTTP verb call returns a deferred object, ensuring method chaining works the same as a regular jQuery AJAX call.
 
 
 ## Specs
