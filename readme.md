@@ -66,7 +66,7 @@ SignalBox.list(resource, options)
   * **query** - A valid SBQL query, with replacement tags. See [query encoding](#query-encoding).
   * **queryReplacements** - A valid replacement object for the `query` parameter.
 
-Makes a request to a resources list action, returning a collection of records.
+Makes a request to a resources list action, returning a collection of records. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### Read
@@ -79,7 +79,7 @@ SignalBox.read(resource, id, options)
 * **id** - The ID of the resource instance.
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
 
-Makes a request to a resources read action, returning an instance of a resource.
+Makes a request to a resources read action, returning an instance of a resource. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### Create
@@ -92,7 +92,7 @@ SignalBox.create(resource, options)
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
   * **params** - An object representing the property values of the new resource.
 
-Makes a request to a resources create action, creating and returning a new resource instance.
+Makes a request to a resources create action, creating and returning a new resource instance. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### Update
@@ -106,7 +106,7 @@ SignalBox.update(resource, id, options)
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`), as well as:
   * **params** - An object representing the property values to update on the resource.
 
-Makes a request to a resources update action, updating and returning the resource instance.
+Makes a request to a resources update action, updating and returning the resource instance. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### Destroy
@@ -119,7 +119,7 @@ SignalBox.destroy(resource, id, options)
 * **id** - The ID of the resource instance.
 * **options** - An object containing any keys supported by jQuery.ajax (including `success` and `error`).
 
-Makes a request to a resources destroy action, deleting the resource instance.
+Makes a request to a resources destroy action, deleting the resource instance. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ## HTTP Verbs
@@ -153,7 +153,7 @@ SignalBox.post(resource, options)
 * **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a POST request to the given URL.
+Performs a POST request to the given URL. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### PUT
@@ -165,7 +165,7 @@ SignalBox.put(resource, options)
 * **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a PUT request to the given URL.
+Performs a PUT request to the given URL. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 
 ### DELETE
@@ -177,8 +177,7 @@ SignalBox.delete(resource, options)
 * **url** - the relative target URL.
 * **options** - An object containing any keys supported by jQuery.ajax (including request parameters, `success` and `error`).
 
-Performs a DELETE request to the given URL. Note that some older browsers may require you to access this method using the `SignalBox['delete']` syntax due to `delete` being a reserved word.
-
+Performs a DELETE request to the given URL. Note that some older browsers may require you to access this method using the `SignalBox['delete']` syntax due to `delete` being a reserved word. The `success` and `error` callbacks are called with the arguments `response` and `xhr`.
 
 ## Queries without an explicit scope
 
