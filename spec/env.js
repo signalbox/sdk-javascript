@@ -1,0 +1,3 @@
+var TestEnvironment = {
+  stubs : {}
+};
