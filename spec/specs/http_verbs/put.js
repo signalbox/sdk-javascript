@@ -38,6 +38,23 @@ suite('SignalBox', {
         expect(error.lastCall.args[1]).toBeXHR();
       },
 
+      "it should trigger the error callback should the resource not exist" : function(){
+        var error = sinon.spy();
+
+        SignalBox.put('/resources/users/12345', {
+          error  : error,
+          params : {
+            name : ""
+          }
+        });
+
+        this.request.respondToLast(404, TestEnvironment.stubs.generic.notFound);
+
+        expect(error.callCount).toBe(1);
+        expect(error.lastCall.args[0]).toEqual(TestEnvironment.stubs.generic.notFound);
+        expect(error.lastCall.args[1]).toBeXHR();
+      },
+
       "it should trigger the error callback should a server error occur" : function(){
         var error = sinon.spy();
 

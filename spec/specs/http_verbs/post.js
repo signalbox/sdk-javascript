@@ -8,7 +8,11 @@ suite('SignalBox', {
         var success = sinon.spy();
 
         SignalBox.post('/resources/users', {
-          success : success
+          success : success,
+          params : {
+            name  : 'Bob',
+            email : 'bob@example.com'
+          }
         });
 
         this.request.respondToLast(201, TestEnvironment.stubs.users.postOK);
