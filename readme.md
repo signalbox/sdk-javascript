@@ -22,10 +22,10 @@ The API documentation related to each library call can be found on [the Signal B
 
 ## Setup
 
-Download and include the javascript in your page:
+Include the SDK in your page:
 
 ```html
-<script type="text/javascript" src="sdk.js"></script>
+<script type="text/javascript" src="http://cdn.getsignalbox.com/sdks/javascript/sdk-0.1.0.js"></script>
 ```
 
 In order to start communicating with your resources API, you'll need to tell Signal Box who you are and what application you're using. To do this, call the `setup` function.
