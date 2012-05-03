@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Signal Box JavaScript SDK by signalbox</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Signal Box JavaScript SDK</h1>
+        <p>The official Signal Box JavaScript SDK.</p>
+        <p class="view"><a href="https://github.com/signalbox/sdk-javascript">View the Project on GitHub <small>signalbox/sdk-javascript</small></a></p>
+        <ul>
+          <li><a href="https://github.com/signalbox/sdk-javascript/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/signalbox/sdk-javascript/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/signalbox/sdk-javascript">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Signal Box JavaScript SDK</h1>
+
+<p>The Signal Box JavaScript SDK aims to provide a light wrapper to communicate with your Signal Box apps. The library depends on jQuery, however suggestions for compatability with other libraries are welcome.</p>
+
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#api-documentation">API Documentation</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#actions">Actions</a></li>
+<li><a href="#http-verbs">HTTP Verbs</a></li>
+<li><a href="#queries-without-an-explicit-scope">Queries without an explicit scope</a></li>
+<li><a href="#query-encoding">Query Encoding</a></li>
+<li><a href="#function-chaining">Function Chaining</a></li>
+<li><a href="#cross-origin-requests">Cross Origin Requests</a></li>
+</ul><h2>API Documentation</h2>
+
+<p>The API documentation related to each library call can be found on <a href="https://docs.getsignalbox.com/reference/resource-api">the Signal Box documentation site</a>.</p>
+
+<h2>Setup</h2>
+
+<p>Include the SDK in your page:</p>
+
+<div class="highlight">
+<pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdn.getsignalbox.com/sdks/javascript/sdk-0.1.0.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre>
+</div>
+
+
+<p>In order to start communicating with your resources API, you'll need to tell Signal Box who you are and what application you're using. To do this, call the <code>setup</code> function.</p>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">setup</span><span class="p">({</span>
+  <span class="nx">app</span>      <span class="o">:</span> <span class="s1">'myapp'</span><span class="p">,</span>
+  <span class="nx">username</span> <span class="o">:</span> <span class="s1">'demo'</span><span class="p">,</span>
+  <span class="nx">version</span>  <span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// optional, latest (1) by default.</span>
+  <span class="nx">https</span>    <span class="o">:</span> <span class="kc">true</span> <span class="c1">// optional, HTTP by default.</span>
+<span class="p">});</span>
+</pre>
+</div>
+
+
+<p>This will ensure your credentials are set correctly for each request.</p>
+
+<h2>Actions</h2>
+
+<p>Signal Box describes HTTP verbs using actions. There are 5 actions in total:</p>
+
+<ul>
+<li><a href="#list">List</a></li>
+<li><a href="#read">Read</a></li>
+<li><a href="#create">Create</a></li>
+<li><a href="#update">Update</a></li>
+<li><a href="#destroy">Destroy</a></li>
+</ul><p>Each of these actions are exposed through the library API.</p>
+
+<h3>List</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">list</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>resource</strong> - The resource plural name.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including <code>success</code> and <code>error</code>), as well as:
+
+<ul>
+<li>
+<strong>query</strong> - A valid SBQL query, with replacement tags. See <a href="#query-encoding">query encoding</a>.</li>
+<li>
+<strong>queryReplacements</strong> - A valid replacement object for the <code>query</code> parameter.</li>
+</ul>
+</li>
+</ul><p>Makes a request to a resources list action, returning a collection of records. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>Read</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>resource</strong> - The resource plural name.</li>
+<li>
+<strong>id</strong> - The ID of the resource instance.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including <code>success</code> and <code>error</code>).</li>
+</ul><p>Makes a request to a resources read action, returning an instance of a resource. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>Create</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>resource</strong> - The resource plural name.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including <code>success</code> and <code>error</code>), as well as:
+
+<ul>
+<li>
+<strong>params</strong> - An object representing the property values of the new resource.</li>
+</ul>
+</li>
+</ul><p>Makes a request to a resources create action, creating and returning a new resource instance. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>Update</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>resource</strong> - The resource plural name.</li>
+<li>
+<strong>id</strong> - The ID of the resource instance.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including <code>success</code> and <code>error</code>), as well as:
+
+<ul>
+<li>
+<strong>params</strong> - An object representing the property values to update on the resource.</li>
+</ul>
+</li>
+</ul><p>Makes a request to a resources update action, updating and returning the resource instance. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>Destroy</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">destroy</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>resource</strong> - The resource plural name.</li>
+<li>
+<strong>id</strong> - The ID of the resource instance.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including <code>success</code> and <code>error</code>).</li>
+</ul><p>Makes a request to a resources destroy action, deleting the resource instance. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h2>HTTP Verbs</h2>
+
+<p>Action functions are simply wrappers around the HTTP verbs API. If you wish, you can use these instead to communicate with your resources:</p>
+
+<ul>
+<li><a href="#get">GET</a></li>
+<li><a href="#post">POST</a></li>
+<li><a href="#put">PUT</a></li>
+<li><a href="#delete">DELETE</a></li>
+</ul><h3>GET</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>url</strong> - the relative target URL.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including request parameters, <code>success</code> and <code>error</code>).</li>
+</ul><p>Performs a GET request to the given URL. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>POST</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>url</strong> - the relative target URL.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including request parameters, <code>success</code> and <code>error</code>).</li>
+</ul><p>Performs a POST request to the given URL. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>PUT</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>url</strong> - the relative target URL.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including request parameters, <code>success</code> and <code>error</code>).</li>
+</ul><p>Performs a PUT request to the given URL. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h3>DELETE</h3>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>url</strong> - the relative target URL.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including request parameters, <code>success</code> and <code>error</code>).</li>
+</ul><p>Performs a DELETE request to the given URL. Note that some older browsers may require you to access this method using the <code>SignalBox['delete']</code> syntax due to <code>delete</code> being a reserved word. The <code>success</code> and <code>error</code> callbacks are called with the arguments <code>response</code> and <code>xhr</code>.</p>
+
+<h2>Queries without an explicit scope</h2>
+
+<p>SBQL queries can also be executed without an explicit scope (resource plural name). You can do this using the <code>query</code> function.</p>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">replacements</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>query</strong> - The SBQL query, with supported replacement tags.</li>
+<li>
+<strong>replacements</strong> - A valid replacement object for the <code>query</code> parameter.</li>
+<li>
+<strong>options</strong> - An object containing any keys supported by jQuery.ajax (including <code>success</code> and <code>error</code>).</li>
+</ul><p>Example usage:</p>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">'SELECT * FROM {{resource}} ORDER BY {{order}}'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">resource</span> <span class="o">:</span> <span class="s1">'users'</span><span class="p">,</span>
+  <span class="nx">order</span>    <span class="o">:</span> <span class="s1">'username'</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="nx">success</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</pre>
+</div>
+
+
+<h2>Query Encoding</h2>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">encodeSBQL</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">replacements</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<ul>
+<li>
+<strong>query</strong> - A string representation of the SBQL query.</li>
+<li>
+<strong>replacements</strong> - An object containing query replacements.</li>
+</ul><p>Encodes a string as a URL parameter into a valid SBQL query. This is a convenience method to avoid scenarios where you may have a large query requiring you to concatenate many strings.</p>
+
+<p>Example usage:</p>
+
+<div class="highlight">
+<pre><span class="nx">SignalBox</span><span class="p">.</span><span class="nx">encodeSBQL</span><span class="p">(</span><span class="s1">'SELECT * FROM {{resource}} ORDER BY {{order}}'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">resource</span> <span class="o">:</span> <span class="s1">'users'</span><span class="p">,</span>
+  <span class="nx">order</span>    <span class="o">:</span> <span class="s1">'username'</span>
+<span class="p">})</span> <span class="c1">// =&gt; SELECT%20*%20FROM%20users%20ORDER%20BY%20username</span>
+</pre>
+</div>
+
+
+<h2>Function Chaining</h2>
+
+<p>Just like jQuery's <code>$.ajax</code> function, each Signal Box action and HTTP verb call returns a deferred object, ensuring method chaining works the same as a regular jQuery AJAX call.</p>
+
+<h2>Cross Origin Requests</h2>
+
+<p>In order to use the SDK from a remote server you'll need to use the Request Headers add-on. This allows you to set additional headers in API responses, including <a href="https://developer.mozilla.org/en/HTTP_access_control">CORS</a> headers. For example, you may want to set the following headers:</p>
+
+<pre lang="plain"><code>Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: Content-Type, X-Requested-With
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+</code></pre>
+
+<p>An alternative to allowing cross domain communication is to use a proxy. When proxying requests you can tell the SDK to use your local webserver instead of <code>api.getsignalbox.com</code> by changing the <code>SignalBox.host</code> value to your web server address.</p>
+
+<h2>Specs</h2>
+
+<p>Specs are written using Jasmine and Sinon. Running the tests should be as simple as opening <code>specs/index.html</code> in your browser.</p>
+
+<h2>Bugs</h2>
+
+<p>If you have any problems with the library, please file an <a href="https://github.com/signalbox/sdk-javascript/issues">issue</a>.</p>
+
+<h2>Note on Patches &amp; Pull Requests</h2>
+
+<ul>
+<li>Fork the project.</li>
+<li>Make your feature addition or bug fix.</li>
+<li>Add tests for it. This is important so we don't break it in a future version unintentionally.</li>
+<li>Commit, please do not mess with rakefile, version, or history.</li>
+<li>Send us a pull request.</li>
+</ul><h2>Copyright</h2>
+
+<p>Copyright (c) 2012 Signal Box <a href="mailto:josh@getsignalbox.com">josh@getsignalbox.com</a>. See LICENSE for details.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/signalbox">signalbox</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-25344605-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
