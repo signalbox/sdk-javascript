@@ -1,8 +1,15 @@
 $(function(){
 
-  // Note: this is an example showing each action
+  // Note:
+  //
+  // This is an example showing each action
   // in order, from listing collections to creating
   // and deleting record instances.
+  //
+  // You'll need to run it on a webserver, however you
+  // might find it easier to play with the example here:
+  //
+  //   http://jsfiddle.net/HwRJ2/3/
 
   SignalBox.setup({
     app      : 'sdk_test',
