@@ -2,6 +2,10 @@ suite('SignalBox', {
 
   'context setup' : {
 
+    before : function(){
+      SignalBox.settings = {};
+    },
+
     'it should accept an options object' : function(){
       var settings = {
         username : 'example'

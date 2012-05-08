@@ -24,6 +24,10 @@
 
 
   function buildRequestURL(options){
+    if(!self.settings.username && !self.settings.app){
+      throw new Error('Please call SignalBox.setup before making a request.');
+    }
+
     var protocol    = self.settings.https ? 'https://' : 'http://',
         url         = protocol + self.host + options.url,
         separator   = (url.indexOf('?') === -1) ? '?' : '&',
