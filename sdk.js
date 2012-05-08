@@ -2,7 +2,7 @@
 
   var self = {
     settings : {},
-    version  : '0.1.0',
+    version  : '0.1.1',
     host     : "api.getsignalbox.com"
   };
 
