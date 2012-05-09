@@ -1,23 +1,24 @@
 beforeEach(function(){
 
-  this.request = {};
+  var request = this.request = {};
+
   this.request.headers = { "Content-Type": "application/json" };
   this.request.xhr = sinon.useFakeXMLHttpRequest();
-
-  var requests = this.request.log = [];
-  var lastRequest;
+  this.request.log = [];
 
   this.request.xhr.onCreate = function(xhr){
-    lastRequest = xhr;
-    requests.push(xhr);
+    request.last = xhr;
+    request.log.push(xhr);
   };
 
   this.request.respondToLast = function(status, body){
-    lastRequest.respond(status, this.headers, JSON.stringify(body));
+    request.last.respond(status, this.headers, JSON.stringify(body));
   };
 
 });
 
 afterEach(function(){
+
   this.request.xhr.restore();
+
 });
