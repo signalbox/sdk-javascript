@@ -93,13 +93,13 @@
 
 
   self.list = function(resource, options){
-    options.data = options.params || {};
+    var url = '/resources/' + resource;
 
     if(options.query){
-      options.data.query = this.encodeSBQL(options.query, options.queryReplacements);
+      url = url + "?query=" + this.encodeSBQL(options.query, options.queryReplacements);
     }
 
-    return this.get('/resources/' + resource, options);
+    return this.get(url, options);
   };
 
 
@@ -172,11 +172,7 @@
 
 
   self.query = function(query, replacements, options){
-    return this.get('/resources', $.extend({
-      data : {
-        query : this.encodeSBQL(query, replacements)
-      }
-    }, options));
+    return this.get('/resources?query=' + this.encodeSBQL(query, replacements), options);
   };
 
 
@@ -187,7 +183,7 @@
       return typeof replacements[match] === 'undefined' ? substring : replacements[match];
     });
 
-    return escape(query);
+    return encodeURIComponent(query);
   };
 
 

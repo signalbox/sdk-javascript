@@ -16,6 +16,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(200, TestEnvironment.stubs.users.putOK);
 
+        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users?sb_username=example&sb_app_name=test&sb_version=2');
         expect(success.callCount).toBe(1);
         expect(success.lastCall.args[0]).toEqual(TestEnvironment.stubs.users.putOK);
         expect(success.lastCall.args[1]).toBeXHR();
@@ -33,6 +34,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(422, TestEnvironment.stubs.users.putUnprocessibleEntity);
 
+        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users?sb_username=example&sb_app_name=test&sb_version=2');
         expect(error.callCount).toBe(1);
         expect(error.lastCall.args[0]).toEqual(TestEnvironment.stubs.users.putUnprocessibleEntity);
         expect(error.lastCall.args[1]).toBeXHR();
@@ -50,6 +52,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(404, TestEnvironment.stubs.generic.notFound);
 
+        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users/12345?sb_username=example&sb_app_name=test&sb_version=2');
         expect(error.callCount).toBe(1);
         expect(error.lastCall.args[0]).toEqual(TestEnvironment.stubs.generic.notFound);
         expect(error.lastCall.args[1]).toBeXHR();
@@ -64,6 +67,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(500, TestEnvironment.stubs.generic.internalServerError);
 
+        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users?sb_username=example&sb_app_name=test&sb_version=2');
         expect(error.callCount).toBe(1);
         expect(error.lastCall.args[0]).toEqual(TestEnvironment.stubs.generic.internalServerError);
         expect(error.lastCall.args[1]).toBeXHR();
