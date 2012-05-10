@@ -13,7 +13,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(200, TestEnvironment.stubs.users.getCollectionOK);
 
-        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users?sb_username=example&sb_app_name=test&sb_version=2');
+        expect(this.request.last).toHaveURLPart('/resources/users?')
         expect(success.callCount).toBe(1);
         expect(success.lastCall.args[0]).toEqual(TestEnvironment.stubs.users.getCollectionOK);
         expect(success.lastCall.args[1]).toBeXHR();
@@ -32,7 +32,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(200, TestEnvironment.stubs.users.getCollectionOK);
 
-        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users?query=SELECT%20*%20ORDER%20BY%20created_at&sb_username=example&sb_app_name=test&sb_version=2');
+        expect(this.request.last).toHaveURLPart('/resources/users?query=SELECT%20*%20ORDER%20BY%20created_at')
         expect(success.callCount).toBe(1);
         expect(success.lastCall.args[0]).toEqual(TestEnvironment.stubs.users.getCollectionOK);
         expect(success.lastCall.args[1]).toBeXHR();
@@ -48,7 +48,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(404, TestEnvironment.stubs.generic.notFound);
 
-        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/missing?sb_username=example&sb_app_name=test&sb_version=2');
+        expect(this.request.last).toHaveURLPart('/resources/missing?')
         expect(error.callCount).toBe(1);
         expect(error.lastCall.args[0]).toEqual(TestEnvironment.stubs.generic.notFound);
         expect(error.lastCall.args[1]).toBeXHR();
@@ -64,7 +64,7 @@ suite('SignalBox', {
 
         this.request.respondToLast(422, TestEnvironment.stubs.generic.unprocessibleEntity);
 
-        expect(this.request.last.url).toEqual('https://api.getsignalbox.com/resources/users?query=SELCTT%20*&sb_username=example&sb_app_name=test&sb_version=2');
+        expect(this.request.last).toHaveURLPart('/resources/users?query=SELCTT%20*')
         expect(error.callCount).toBe(1);
         expect(error.lastCall.args[0]).toEqual(TestEnvironment.stubs.generic.unprocessibleEntity);
         expect(error.lastCall.args[1]).toBeXHR();

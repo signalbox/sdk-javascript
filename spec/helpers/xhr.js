@@ -15,6 +15,20 @@ beforeEach(function(){
     request.last.respond(status, this.headers, JSON.stringify(body));
   };
 
+  this.addMatchers({
+
+    toHaveURLPart : function(expected){
+      var request = this.actual;
+
+      this.message = function () {
+        return "Expected " + request.url + " to have URL part " + expected;
+      };
+
+      return request.url.indexOf(expected) !== -1;
+    }
+
+  });
+
 });
 
 afterEach(function(){
