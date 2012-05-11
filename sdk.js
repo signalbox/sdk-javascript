@@ -75,6 +75,14 @@
     return $.ajax(options);
   };
 
+  function encodeResourceParams(params){
+    params || (params = {});
+
+    delete params['_id'];
+
+    return JSON.stringify(params)
+  };
+
 
   // ----------------------------
   // Setup
@@ -139,7 +147,7 @@
 
 
   self.post = function(url, options){
-    options.data = JSON.stringify(options.params);
+    options.data = encodeResourceParams(options.params);
 
     return performRequest($.extend({
       type : 'POST',
@@ -149,7 +157,7 @@
 
 
   self.put = function(url, options){
-    options.data = JSON.stringify(options.params);
+    options.data = encodeResourceParams(options.params);
 
     return performRequest($.extend({
       type : 'PUT',

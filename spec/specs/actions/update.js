@@ -22,6 +22,21 @@ suite('SignalBox', {
         expect(success.lastCall.args[1]).toBeXHR();
       },
 
+      "it should remove any _id properties from the params before encoding" : function(){
+        var success = sinon.spy();
+
+        SignalBox.update('users', '4fa12df79c790b15b100021a', {
+          success : success,
+          params  : {
+            _id  : '12345',
+            name : "Updated"
+          }
+        });
+
+        this.request.respondToLast(200, TestEnvironment.stubs.users.putOK);
+        expect(this.request.last.requestBody).toEqual('{"name":"Updated"}');
+      },
+
       "it should trigger the error callback should the resource params be invalid" : function(){
         var error = sinon.spy();
 
