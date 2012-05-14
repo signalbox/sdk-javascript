@@ -26,9 +26,7 @@ suite('SignalBox', {
         })).toEqual('SELECT%20username%20FROM%20users%20ORDER%20BY%20username');
       }
 
-    },
-
-    'context query' : {}
+    }
 
   }
 
