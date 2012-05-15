@@ -245,7 +245,7 @@ An alternative to allowing cross domain communication is to use a proxy. When pr
 
 ## Specs
 
-Specs are written using Jasmine and Sinon. Running the tests should be as simple as opening `specs/index.html` in your browser.
+Specs are written using Jasmine and Sinon. Running the tests should be as simple as opening `spec/index.html` in your browser.
 
 
 ## Bugs
